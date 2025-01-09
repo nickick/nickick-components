@@ -1,18 +1,18 @@
 {
-  "name": "@repo/slider-picker",
+  "name": "@nickick/components",
   "type": "module",
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc"
   },
   "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "default": "./dist/index.js"
+    "./slider-picker": {
+      "types": "./src/slider-picker/index.ts",
+      "default": "./dist/slider-picker/index.js"
     }
   },
   "devDependencies": {
-    "@repo/typescript-config": "*",
+    "@nickick/typescript-config": "*",
     "typescript": "latest"
   }
 }

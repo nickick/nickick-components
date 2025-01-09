@@ -1,5 +1,5 @@
 {
-  "name": "slider-picker",
+  "name": "nickick-components",
   "private": true,
   "scripts": {
     "build": "turbo build",
