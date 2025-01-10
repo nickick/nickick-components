@@ -1,4 +1,12 @@
-import { Children, useCallback, useState, ReactNode, useEffect } from "react";
+import {
+  Children,
+  useCallback,
+  useState,
+  ReactNode,
+  useEffect,
+  cloneElement,
+  ReactElement,
+} from "react";
 import { cx } from "../utils";
 import { motion, useMotionValue } from "motion/react";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
@@ -6,21 +14,33 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 const SliderArrow = ({
   onClick,
   className,
+  sliderButton,
 }: {
   onClick: () => void;
   className?: string;
+  sliderButton?: ReactElement;
 }) => {
-  return (
-    <div
-      className={cx(
-        "ui-absolute ui-h-12 ui-w-12 ui-bg-black/30 ui-z-10 ui-top-1/2 ui-translate-y-[-50%] ui-rounded-full ui-flex ui-items-center ui-justify-center ui-cursor-pointer",
-        className
-      )}
-      onClick={onClick}
-    >
-      <ArrowRightIcon className="ui-size-6 ui-text-white" />
-    </div>
-  );
+  if (sliderButton) {
+    return cloneElement(sliderButton, {
+      ...sliderButton,
+      onClick: () => {
+        sliderButton.props.onClick?.();
+        onClick();
+      },
+    });
+  } else {
+    return (
+      <div
+        className={cx(
+          "ui-absolute ui-h-12 ui-w-12 ui-bg-black/30 ui-z-10 ui-top-1/2 ui-translate-y-[-50%] ui-rounded-full ui-flex ui-items-center ui-justify-center ui-cursor-pointer",
+          className
+        )}
+        onClick={onClick}
+      >
+        <ArrowRightIcon className="ui-size-6 ui-text-white" />
+      </div>
+    );
+  }
 };
 
 const SliderPicker = ({
@@ -28,13 +48,25 @@ const SliderPicker = ({
   sliderClassName,
   onChangeSelected,
   slideDisabled,
+  controlledIndex,
+  sliderButtons,
 }: {
-  children: ReactNode;
+  children: ReactNode | Iterable<ReactNode>;
   sliderClassName?: string;
   onChangeSelected?: (index: number) => void;
   slideDisabled?: boolean;
+  controlledIndex?: number;
+  sliderButtons?: {
+    left?: ReactElement;
+    right?: ReactElement;
+  };
 }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(controlledIndex ?? 0);
+  useEffect(() => {
+    if (controlledIndex !== undefined) {
+      setSelectedIndex(controlledIndex);
+    }
+  }, [controlledIndex]);
   const [dragging, setDragging] = useState(false);
 
   const childrenArray = Children.toArray(children);
@@ -67,10 +99,12 @@ const SliderPicker = ({
     <div className="ui-relative ui-w-full ui-overflow-x-hidden ui-overflow-y-visible">
       <SliderArrow
         className="ui-left-4 ui-rotate-180"
+        sliderButton={sliderButtons?.left}
         onClick={() => setSelectedIndex((prev) => Math.max(prev - 1, 0))}
       />
       <SliderArrow
         className="ui-right-4"
+        sliderButton={sliderButtons?.right}
         onClick={() =>
           setSelectedIndex((prev) =>
             Math.min(prev + 1, childrenArray.length - 1)

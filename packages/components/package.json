@@ -8,7 +8,7 @@
   },
   "exports": {
     "./slider-picker": {
-      "types": "./src/slider-picker/index.ts",
+      "types": "./dist/slider-picker/index.d.ts",
       "default": "./dist/slider-picker/index.js"
     },
     "./styles.css": "./dist/index.css"
