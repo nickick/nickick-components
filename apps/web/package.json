@@ -12,12 +12,14 @@
   },
   "dependencies": {
     "@nickick/components": "*",
+    "motion": "^11.16.4",
     "next": "^15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@nickick/eslint-config": "*",
+    "@nickick/tailwind-config": "*",
     "@nickick/typescript-config": "*",
     "@types/node": "^20",
     "@types/react": "18.3.1",

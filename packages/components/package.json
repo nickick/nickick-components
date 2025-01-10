@@ -1,18 +1,30 @@
 {
   "name": "@nickick/components",
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc"
+    "dev": "concurrently 'tsc --watch' 'tailwindcss -i ./src/styles.css -o ./dist/index.css --watch'",
+    "build": "tsc && tailwindcss -i ./src/styles.css -o ./dist/index.css"
   },
   "exports": {
     "./slider-picker": {
       "types": "./src/slider-picker/index.ts",
       "default": "./dist/slider-picker/index.js"
-    }
+    },
+    "./styles.css": "./dist/index.css"
   },
   "devDependencies": {
     "@nickick/typescript-config": "*",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
     "typescript": "latest"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.2.0",
+    "clsx": "^2.1.1",
+    "motion": "^11.16.4",
+    "tailwind-merge": "^2.6.0"
   }
 }
