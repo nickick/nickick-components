@@ -47,14 +47,14 @@ const SliderPicker = ({
   children,
   sliderClassName,
   onChangeSelected,
-  slideDisabled,
+  slideEnabled,
   controlledIndex,
   sliderButtons,
 }: {
   children: ReactNode | Iterable<ReactNode>;
+  slideEnabled: boolean;
   sliderClassName?: string;
   onChangeSelected?: (index: number) => void;
-  slideDisabled?: boolean;
   controlledIndex?: number;
   sliderButtons?: {
     left?: ReactElement;
@@ -115,7 +115,7 @@ const SliderPicker = ({
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         style={{ x: dragX }}
-        dragListener={slideDisabled}
+        dragListener={slideEnabled}
         animate={{ translateX: `${-50 * selectedIndex}%` }}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
