@@ -48,11 +48,13 @@ const SliderPicker = ({
   sliderClassName,
   onChangeSelected,
   slideEnabled,
+  translateMultiplier,
   controlledIndex,
   sliderButtons,
 }: {
   children: ReactNode | Iterable<ReactNode>;
   slideEnabled: boolean;
+  translateMultiplier?: number;
   sliderClassName?: string;
   onChangeSelected?: (index: number) => void;
   controlledIndex?: number;
@@ -116,7 +118,9 @@ const SliderPicker = ({
         dragConstraints={{ left: 0, right: 0 }}
         style={{ x: dragX }}
         dragListener={slideEnabled}
-        animate={{ translateX: `${-50 * selectedIndex}%` }}
+        animate={{
+          translateX: `${-(translateMultiplier ?? 50) * selectedIndex}%`,
+        }}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         className={cx("ui-flex ui-shrink-0 ui-items-center", sliderClassName)}

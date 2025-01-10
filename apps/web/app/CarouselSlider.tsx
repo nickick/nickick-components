@@ -63,6 +63,7 @@ export default function CarouselSlider() {
       <div className="absolute w-1 h-full bg-black/50 right-[11%]" /> */}
       <div className="grid h-full place-items-center">
         <SliderPicker
+          slideEnabled={true}
           sliderClassName="gap-4"
           onChangeSelected={(index) => setSelectedIndex(index)}
         >
