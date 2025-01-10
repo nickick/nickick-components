@@ -13,6 +13,9 @@
     },
     "./styles.css": "./dist/index.css"
   },
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@nickick/typescript-config": "*",
     "autoprefixer": "^10.4.20",
