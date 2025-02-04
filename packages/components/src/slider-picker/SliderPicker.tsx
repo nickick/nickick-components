@@ -43,18 +43,15 @@ const SliderArrow = ({
   }
 };
 
-const SliderPicker = ({
-  children,
-  sliderClassName,
-  onChangeSelected,
-  slideEnabled,
-  translateMultiplier,
-  controlledIndex,
-  sliderButtons,
-}: {
+type SliderPickerProps = {
   children: ReactNode | Iterable<ReactNode>;
   slideEnabled: boolean;
-  translateMultiplier?: number;
+  // Width of the middle item
+  itemWidth?: number;
+  // Gap between items
+  gapWidth?: number;
+  // Unit of the width values, supports px, %, rem
+  widthUnit?: "px" | "%" | "rem";
   sliderClassName?: string;
   onChangeSelected?: (index: number) => void;
   controlledIndex?: number;
@@ -62,7 +59,19 @@ const SliderPicker = ({
     left?: ReactElement;
     right?: ReactElement;
   };
-}) => {
+};
+
+const SliderPicker = ({
+  children,
+  sliderClassName,
+  onChangeSelected,
+  slideEnabled,
+  itemWidth,
+  gapWidth,
+  widthUnit,
+  controlledIndex,
+  sliderButtons,
+}: SliderPickerProps) => {
   const [selectedIndex, setSelectedIndex] = useState(controlledIndex ?? 0);
   useEffect(() => {
     if (controlledIndex !== undefined) {
@@ -119,7 +128,9 @@ const SliderPicker = ({
         style={{ x: dragX }}
         dragListener={slideEnabled}
         animate={{
-          translateX: `${-(translateMultiplier ?? 50) * selectedIndex}%`,
+          translateX: `${
+            -((itemWidth ?? 0) + (gapWidth ?? 0)) * selectedIndex
+          }${widthUnit ?? "%"}`,
         }}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}

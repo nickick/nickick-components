@@ -13,15 +13,6 @@ const items = [
   "https://via.assets.so/game.jpg?w=1280&h=720",
 ];
 
-const selectedIndexToLeftOffsetMap = {
-  0: ["1%", "0px", "15%"],
-  1: ["12%", "17px", "-23%"],
-  2: ["24%", "35px", "-10%"],
-  3: ["36%", "52px", "1%"],
-  4: ["48%", "70px", "12%"],
-  5: ["60%", "88px", "-10%"],
-};
-
 const SliderPickerItem = ({
   url,
   selectedIndex,
@@ -31,17 +22,11 @@ const SliderPickerItem = ({
   selectedIndex: number;
   index: number;
 }) => {
-  const offsets =
-    selectedIndexToLeftOffsetMap[
-      selectedIndex as keyof typeof selectedIndexToLeftOffsetMap
-    ];
   return (
     <div
       className={cx(
-        "relative w-[150px] h-[200px] shrink-0 rounded-lg transition-all duration-300",
-        selectedIndex === index
-          ? `w-[200px] h-[300px] left-[${offsets[1]}]`
-          : `left-[${selectedIndex < index ? offsets[0] : offsets[2]}]`,
+        "relative w-[150px] h-[200px] shrink-0 rounded-lg transition-all duration-300 transform overflow-visible",
+        selectedIndex === index ? `scale-125` : ``,
         `z-[${100 - index * 10}]`
       )}
       style={{
@@ -64,7 +49,10 @@ export default function CarouselSlider() {
       <div className="grid h-full place-items-center">
         <SliderPicker
           slideEnabled={true}
-          sliderClassName="gap-4"
+          sliderClassName="gap-16"
+          itemWidth={150}
+          gapWidth={64}
+          widthUnit="px"
           onChangeSelected={(index) => setSelectedIndex(index)}
         >
           {items.map((item, index) => (
